@@ -26,6 +26,9 @@ module.exports =
       autoDelete: false
       id: _.uniqueId('notification')
 
+    if !notification.id?
+      delete notification.id
+
     notification = _.extend defaults, notification
 
     dispatcher.handleViewAction
