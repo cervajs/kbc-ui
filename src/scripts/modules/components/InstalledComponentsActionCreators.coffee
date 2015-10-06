@@ -17,6 +17,20 @@ ComponentsStore = require './stores/ComponentsStore'
 
 deleteComponentConfiguration = require './utils/deleteComponentConfiguration'
 
+storeEncodedConfig = (componentId, configId, dataToSave) ->
+  component = InstalledComponentsStore.getComponent(componentId)
+  if component.get('flags').includes('encrypt')
+    encoded  = installedComponentsApi
+    .encryptData(component.get('uri'), dataToSave)
+    encoded.then((result) ->
+      dataToSave = {configuration: JSON.stringify(result)}
+      installedComponentsApi
+      .updateComponentConfiguration(componentId, configId, dataToSave)
+    )
+  else
+    dataToSave = {configuration: JSON.stringify(result)}
+    installedComponentsApi
+    .updateComponentConfiguration(componentId, configId, dataToSave)
 
 module.exports =
 
@@ -78,10 +92,8 @@ module.exports =
     )
     dataToSave = InstalledComponentsStore.getSavingConfigData(componentId, configId)
     dataToSave = dataToSave?.toJS()
-    dataToSave = {configuration: JSON.stringify(dataToSave)}
 
-    installedComponentsApi
-    .updateComponentConfiguration(componentId, configId, dataToSave).then (response) ->
+    storeEncodedConfig(componentId, configId, dataToSave).then (response) ->
       dispatcher.handleViewAction(
         type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_SAVE_SUCCESS
         componentId: componentId
@@ -108,10 +120,8 @@ module.exports =
     dataToSave = InstalledComponentsStore.getConfigData(componentId, configId)
     dataToSave = dataToSave?.toJS()
     dataToSave.parameters = parametersToSave
-    dataToSave = {configuration: JSON.stringify(dataToSave)}
 
-    installedComponentsApi
-    .updateComponentConfiguration(componentId, configId, dataToSave).then (response) ->
+    storeEncodedConfig(componentId, configId, dataToSave).then (response) ->
       dispatcher.handleViewAction(
         type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATAPARAMETERS_SAVE_SUCCESS
         componentId: componentId
@@ -137,10 +147,8 @@ module.exports =
     )
     dataToSave = InstalledComponentsStore.getSavingConfigData(componentId, configId)
     dataToSave = dataToSave?.toJS()
-    dataToSave = {configuration: JSON.stringify(dataToSave)}
 
-    installedComponentsApi
-    .updateComponentConfiguration(componentId, configId, dataToSave).then (response) ->
+    storeEncodedConfig(componentId, configId, dataToSave).then (response) ->
       dispatcher.handleViewAction(
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS
         componentId: componentId
@@ -273,8 +281,7 @@ module.exports =
     data = {}
     data[field] = newValue
 
-    installedComponentsApi
-    .updateComponentConfiguration componentId, configurationId, data
+    storeEncodedConfig componentId, configurationId, data
     .then (response) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_SUCCESS
@@ -426,10 +433,8 @@ module.exports =
     else
       pathDestination = pathSource
 
-    data =
-      configuration: JSON.stringify(dataToSave.setIn(pathDestination, mappingData.getIn(pathSource)).toJSON())
-    installedComponentsApi
-    .updateComponentConfiguration componentId, configId, data
+    data = dataToSave.setIn(pathDestination, mappingData.getIn(pathSource)).toJSON()
+    storeEncodedConfig componentId, configId, data
     .then (response) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_MAPPING_SAVE_SUCCESS
@@ -459,10 +464,8 @@ module.exports =
 
     dataToSave = InstalledComponentsStore.getConfigData(componentId, configId)
     path = ['storage', type, storage, index]
-    data =
-      configuration: JSON.stringify(dataToSave.deleteIn(path).toJSON())
-    installedComponentsApi
-    .updateComponentConfiguration componentId, configId, data
+    data = dataToSave.deleteIn(path).toJSON()
+    storeEncodedConfig componentId, configId, data
     .then (response) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_MAPPING_DELETE_SUCCESS

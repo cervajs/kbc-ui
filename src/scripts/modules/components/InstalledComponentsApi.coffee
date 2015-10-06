@@ -50,4 +50,13 @@ installedComponentsApi =
     .then (response) ->
       response.body
 
+  encryptData: (componentUrl, data) ->
+    request('POST', componentUrl + "/encrypt")
+    .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString())
+    .set('Content-Type', 'application/json')
+    .send data
+    .promise()
+    .then (response) ->
+      response.body
+
 module.exports = installedComponentsApi
