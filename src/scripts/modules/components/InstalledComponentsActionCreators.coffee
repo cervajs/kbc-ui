@@ -28,7 +28,7 @@ storeEncodedConfig = (componentId, configId, dataToSave) ->
       .updateComponentConfiguration(componentId, configId, dataToSave)
     )
   else
-    dataToSave = {configuration: JSON.stringify(result)}
+    dataToSave = {configuration: JSON.stringify(dataToSave)}
     installedComponentsApi
     .updateComponentConfiguration(componentId, configId, dataToSave)
 
