@@ -29,7 +29,7 @@ export default React.createClass({
         <div className="form-group">
           <div className="col-xs-offset-4 col-xs-8">
             <Button bsStyle="success" onClick={this.props.onRun} disabled={!this.props.isValid || this.props.isSaving}>
-              Run Backup
+              Run Export
             </Button> {this.loader()} {this.props.savedMessage}
           </div>
         </div>
