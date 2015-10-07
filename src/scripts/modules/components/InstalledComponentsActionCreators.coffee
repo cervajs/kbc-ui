@@ -351,10 +351,17 @@ module.exports =
 
     params = _.extend {}, defaultParams, params
 
-    componentRunner.run
-      component: params.component
-      data: params.data
-      method: params.method
+    component = ComponentsStore.getComponent(params.component)
+    if component.get('flags').includes('encrypt')
+      promise  = installedComponentsApi.encryptData(component.get('uri'), params)
+    else
+      promise = Promise.resolve(params)
+
+    promise.then (params) ->
+      componentRunner.run
+        component: params.component
+        data: params.data
+        method: params.method
     .then (job) ->
       JobsActionCreators.recieveJobDetail(job)
       if params.notify
