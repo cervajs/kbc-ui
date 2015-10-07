@@ -39,14 +39,17 @@ export default React.createClass({
   scripts() {
     if (this.props.isEditing) {
       return (
-        <Edit
-          data={this.props.data}
-          isSaving={this.props.isSaving}
-          onSave={this.props.onEditSubmit}
-          onChange={this.props.onEditChange}
-          onCancel={this.props.onEditCancel}
-          isValid={this.props.isValid}
-          />
+        <span>
+          <p className="help-block small">Keys prefixed with <code>#</code> sign will be encrypted on save. Already encrypted strings will persist.</p>
+          <Edit
+            data={this.props.data}
+            isSaving={this.props.isSaving}
+            onSave={this.props.onEditSubmit}
+            onChange={this.props.onEditChange}
+            onCancel={this.props.onEditCancel}
+            isValid={this.props.isValid}
+            />
+        </span>
       );
     } else {
       return (
