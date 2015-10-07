@@ -16,9 +16,16 @@ export default React.createClass({
     return (
       <div className="form-horizontal">
         {this.input('AWS Access Key ID', 'awsAccessKeyId', '')}
-        {this.input('AWS Secret Access Key', 'awsSecretAccessKey', '')}
+        {this.input('AWS Secret Access Key', '#awsSecretAccessKey', '')}
         {this.input('S3 Bucket', 's3bucket', 'my-bucket')}
         {this.input('S3 path', 's3path')}
+        <Input type="checkbox"
+           wrapperClassName="col-xs-offset-4 col-xs-8"
+           label="Export only project structure"
+           help="All buckets and tables metadata and all configurations will be exported."
+           checked={this.props.parameters.get('onlyStructure')}
+           onChange={this.handleOnlyStructureChange}
+        />
         <div className="form-group">
           <div className="col-xs-offset-4 col-xs-8">
             <Button bsStyle="success" onClick={this.props.onRun} disabled={!this.props.isValid || this.props.isSaving}>
@@ -48,5 +55,9 @@ export default React.createClass({
 
   handleChange(field, event) {
     this.props.onChange(this.props.parameters.set(field, event.target.value));
+  },
+
+  handleOnlyStructureChange(event) {
+    this.props.onChange(this.props.parameters.set('onlyStructure', event.target.checked));
   }
 });

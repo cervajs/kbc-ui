@@ -18,9 +18,10 @@ export default React.createClass({
   getStateFromStores() {
     const defaultParameters = Map({
       awsAccessKeyId: '',
-      awsSecretAccessKey: '',
+      '#awsSecretAccessKey': '',
       s3bucket: '',
-      s3path: '/'
+      s3path: '/',
+      onlyStructure: false
     });
     return {
       parameters: InstalledComponentsStore.getEditingConfigData(COMPONENT_ID, CONFIG_ID, defaultParameters)
@@ -35,6 +36,7 @@ export default React.createClass({
   },
 
   render() {
+    console.log('params', this.state.parameters.toJS());
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -49,7 +51,7 @@ export default React.createClass({
           </div>
           <div className="row">
             <p>
-              You can backup whole your Keboola Connection project into <a href="http://aws.amazon.com/s3/">AWS S3</a>.
+              You can export whole your Keboola Connection project into <a href="http://aws.amazon.com/s3/">AWS S3</a>.
             </p>
             <p>
               <strong>
