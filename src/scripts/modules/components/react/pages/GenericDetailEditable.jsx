@@ -38,7 +38,7 @@ export default React.createClass({
     if (this.state.component.get('documentationUrl')) {
       return (
         <span>
-          See the <a href={this.state.component.get('documentationUrl')}>documentation</a> for more details.
+          See the <a href={this.state.component.get('documentationUrl')}>documentation</a> for more details about this configuration.
         </span>
       );
     } else {
@@ -69,6 +69,7 @@ export default React.createClass({
                 onEditSubmit={this.onEditSubmit}
                 isValid={this.state.isValidEditingConfigData}
                 />
+
             </div>
           </div>
         </div>
