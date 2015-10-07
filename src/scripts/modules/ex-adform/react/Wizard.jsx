@@ -105,7 +105,7 @@ export default React.createClass({
 
   isCredentialsValid() {
     return this.props.credentials.get('username').trim().length > 0 &&
-      this.props.credentials.get('password').trim().length > 0;
+      this.props.credentials.get('#password').trim().length > 0;
   },
 
   goToCredentials() {

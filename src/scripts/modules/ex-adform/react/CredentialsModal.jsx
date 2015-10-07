@@ -39,7 +39,7 @@ export default React.createClass({
 
   isValid() {
     return this.props.credentials.get('username').trim().length > 0 &&
-      this.props.credentials.get('password').trim().length > 0;
+      this.props.credentials.get('#password').trim().length > 0;
   },
 
   handleSave() {

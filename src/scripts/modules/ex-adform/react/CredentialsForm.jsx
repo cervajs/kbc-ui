@@ -21,8 +21,8 @@ export default React.createClass({
         <Input
           type="password"
           label="Password"
-          value={this.props.credentials.get('password')}
-          onChange={this.handleChange.bind(this, 'password')}
+          value={this.props.credentials.get('#password')}
+          onChange={this.handleChange.bind(this, '#password')}
           labelClassName='col-sm-4' wrapperClassName='col-sm-6'
           />
       </div>

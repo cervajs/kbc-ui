@@ -16,7 +16,7 @@ export default function (configName, baseConfig) {
       },
       'config': {
         'username': '',
-        'password': '',
+        '#password': '',
         'auth': {
           'request': {
             'endpoint': 'Security/Login',
@@ -28,7 +28,7 @@ export default function (configName, baseConfig) {
                 'attr': 'username'
               },
               'PassWord': {
-                'attr': 'password'
+                'attr': '#password'
               }
             }
           },
