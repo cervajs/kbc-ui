@@ -353,7 +353,11 @@ module.exports =
 
     component = ComponentsStore.getComponent(params.component)
     if component.get('flags').includes('encrypt')
-      promise  = installedComponentsApi.encryptData(component.get('uri'), params)
+      promise  = installedComponentsApi
+        .encryptData(component.get('uri'), params.data)
+        .then (dataEncrypted) ->
+          _.extend {}, params,
+            data: dataEncrypted
     else
       promise = Promise.resolve(params)
 

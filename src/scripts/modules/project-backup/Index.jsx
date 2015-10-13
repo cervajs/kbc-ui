@@ -20,7 +20,7 @@ export default React.createClass({
       awsAccessKeyId: '',
       '#awsSecretAccessKey': '',
       s3bucket: '',
-      s3path: '/',
+      s3path: '',
       onlyStructure: false
     });
     return {
@@ -36,7 +36,6 @@ export default React.createClass({
   },
 
   render() {
-    console.log('params', this.state.parameters.toJS());
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -55,7 +54,7 @@ export default React.createClass({
             </p>
             <p>
               <strong>
-                Backup will contain
+                Export will contain
               </strong>
             </p>
             <ul>
@@ -80,7 +79,14 @@ export default React.createClass({
   },
 
   isValid() {
-    return this.state.parameters.filter((value) => value === '').count() === 0;
+    const requiredFields = [
+      'awsAccessKeyId',
+      '#awsSecretAccessKey',
+      's3bucket'
+    ];
+    return this.state.parameters
+        .filter((value, key) => requiredFields.indexOf(key) >= 0)
+        .filter((value) => value === '').count() === 0;
   },
 
   handleParametersChange(newParameters) {
