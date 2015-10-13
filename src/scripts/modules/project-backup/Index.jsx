@@ -125,7 +125,7 @@ export default React.createClass({
     }
     return (
       <span>
-        Backup started. You can track progress <Link to="jobDetail" params={{jobId: this.state.jobId}}>here</Link>
+        Export started. You can track progress <Link to="jobDetail" params={{jobId: this.state.jobId}}>here</Link>
       </span>
     );
   }
