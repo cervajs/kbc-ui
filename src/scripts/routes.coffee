@@ -12,7 +12,7 @@ applications = require './modules/applications/Routes'
 
 StorageActionCreators = require './modules/components/StorageActionCreators'
 
-ProjectBackup = require './modules/project-backup/Index'
+ProjectExport = require './modules/project-export/Index'
 
 
 # Custom routing configuration object
@@ -37,9 +37,9 @@ routes =
     ,
       transformationsRoutes
     ,
-      name: 'project-backup'
+      name: 'project-export'
       title: 'Project Export'
-      defaultRouteHandler: ProjectBackup
+      defaultRouteHandler: ProjectExport
 
   ]
 
