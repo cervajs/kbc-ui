@@ -1,4 +1,3 @@
-
 EventEmitter = require('events').EventEmitter
 assign = require 'object-assign'
 
@@ -21,6 +20,7 @@ StoreUtils =
       removeChangeListener: (callback) ->
         @removeListener(CHANGE_EVENT, callback)
 
+    store.setMaxListeners(0)
     store
 
 
